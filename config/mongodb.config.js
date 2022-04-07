@@ -1,3 +1,4 @@
+'use strict';
 const mongoose = require('mongoose');
 const config = require('./index');
 
@@ -5,6 +6,7 @@ const HOST = config.dbHost;
 const USER = config.dbUser;
 const PASS = config.dbPass;
 const DBNAME = config.dbName;
+console.log({ env: process.env.NODE_ENV, HOST, USER, PASS, DBNAME });
 
 const URI = `mongodb+srv://${USER}:${PASS}@${HOST}/${DBNAME}?retryWrites=true&w=majority`;
 

@@ -15,8 +15,8 @@ app.use(express.json());
 app.use(cors());
 app.use(helmet());
 
-middlewareApi(app);
 routerApi(app);
+middlewareApi(app);
 
 app.listen(config.appPort, () => {
   console.log(`app running on port ${config.appPort}`);

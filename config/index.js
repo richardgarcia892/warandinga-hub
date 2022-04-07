@@ -1,5 +1,6 @@
-require('dotenv').config();
-
+'use strict';
+const path = process.env.NODE_ENV ? {} : `.env.${process.env.NODE_ENV}`;
+require('dotenv').config(path);
 const config = {
   env: process.env.NODE_ENV || 'dev',
   appPort: process.env.PORT || 3000,

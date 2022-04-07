@@ -1,3 +1,4 @@
+'use strict';
 const boom = require('@hapi/boom');
 
 const User = require('../models/users.model');
@@ -8,9 +9,17 @@ class UserService {
   _notFoundError(id) {
     throw boom.notFound(`User (${id}) not found`);
   }
+  _dbError(error) {
+    throw boom.internal(error);
+  }
+
   async create(data) {
-    const user = await User.create(data);
-    return user;
+    try {
+      const user = await User.create(data);
+      return user;
+    } catch (error) {
+      this._dbError(error);
+    }
   }
 
   async find() {
@@ -19,8 +28,9 @@ class UserService {
   }
 
   async findOne(id) {
-    const user = User.findOne({ id });
+    const user = await User.findOne({ id });
     if (!user) this._notFoundError(id);
+    user.toObject({ versionKey: false });
     return user;
   }
 
