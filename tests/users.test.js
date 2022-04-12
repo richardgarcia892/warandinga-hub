@@ -1,9 +1,9 @@
-'use strict';
-process.env.NODE_ENV = 'test';
-const app = require('../app');
-const User = require('../models/users.model');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
+const app = require('../app');
+const User = require('../models/users.model');
+
+process.env.NODE_ENV = 'TEST';
 
 chai.should();
 chai.use(chaiHttp);
@@ -30,7 +30,7 @@ describe('Users', () => {
   });
   describe('/POST User', () => {});
   it('it should not POST an User without EMAIL field', (done) => {
-    let user = {
+    const user = {
       userName: 'jhondoe1992',
       password: 'JhonPassword',
       firstName: 'Jhon',
@@ -38,7 +38,7 @@ describe('Users', () => {
     };
     chai
       .request(app)
-      .post('/v1/users')
+      .post('/api/v1/users')
       .send(user)
       .end((err, res) => {
         res.should.have.status(500);
@@ -50,7 +50,7 @@ describe('Users', () => {
       });
   });
   it('it should  POST an User', (done) => {
-    let user = {
+    const user = {
       userName: 'jhondoe1992',
       password: 'JhonPassword',
       email: 'jhondoe@email.com',
@@ -59,12 +59,13 @@ describe('Users', () => {
     };
     chai
       .request(app)
-      .post('/v1/users')
+      .post('/api/v1/users')
       .send(user)
       .end((err, res) => {
         res.should.have.status(201);
         res.body.should.be.a('object');
-        res.body.should.be.eql(user);
+        res.body.shoud.have.property('userName');
+        res.body.shoud.have.property('email');
         done();
       });
   });

@@ -1,15 +1,41 @@
-'use strict';
-/* eslint-disable no-unused-vars */
-const express = require('express');
-const router = express.Router();
+const Router = require('express');
 
-const controller = require('../controllers/users.controller');
+const userController = require('../controllers/users.controller');
+const validationHandler = require('../middleware/validation.handler');
+const {
+  createUserSchema,
+  updateUserSchema,
+  getUserByIdSchema,
+} = require('../schemas/users.schema');
+
+const router = Router();
 
 /* GET users listing. */
-router.get('/', controller.getAll);
-router.post('/', controller.create);
-router.get('/:id', controller.getById);
-router.put('/:id', controller.update);
-router.delete('/:id', controller.remove);
+router.get('/', userController.getAll);
+/* Create new user */
+router.post(
+  '/',
+  validationHandler(createUserSchema, 'body'),
+  userController.create
+);
+/* Get single user by ID */
+router.get(
+  '/:id',
+  validationHandler(getUserByIdSchema, 'params'),
+  userController.getById
+);
+/* Update an user DATA */
+router.put(
+  '/:id',
+  validationHandler(getUserByIdSchema, 'params'),
+  validationHandler(updateUserSchema, 'body'),
+  userController.update
+);
+/* Delete Given User */
+router.delete(
+  '/:id',
+  validationHandler(getUserByIdSchema, 'params'),
+  userController.remove
+);
 
 module.exports = router;

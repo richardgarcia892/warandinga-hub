@@ -1,51 +1,56 @@
-'use strict';
+/* eslint-disable no-underscore-dangle */
 const boom = require('@hapi/boom');
 
 const User = require('../models/users.model');
 
-class UserService {
-  constructor() {}
+function notFoundError(id) {
+  throw boom.notFound(`User (${id}) not found`);
+}
 
-  _notFoundError(id) {
-    throw boom.notFound(`User (${id}) not found`);
-  }
-  _dbError(error) {
-    throw boom.internal(error);
-  }
+function dbError(error) {
+  throw boom.internal(`${error}`);
+}
 
-  async create(data) {
-    try {
-      const user = await User.create(data);
-      return user;
-    } catch (error) {
-      this._dbError(error);
-    }
-  }
-
-  async find() {
-    const users = await User.find();
-    return users;
-  }
-
-  async findOne(id) {
-    const user = await User.findOne({ id });
-    if (!user) this._notFoundError(id);
-    user.toObject({ versionKey: false });
+async function create(data) {
+  try {
+    const user = await User.create(data);
     return user;
-  }
-
-  async update(id, changes) {
-    const user = User.findOneAndUpdate({ id }, { ...changes });
-    if (!user) this._notFoundError(id);
-    await user.save();
-    return user;
-  }
-
-  async delete(id) {
-    const user = User.findOneAndDelete({ id });
-    if (!user) this._notFoundError(id);
-    return user;
+  } catch (error) {
+    return dbError(error);
   }
 }
 
-module.exports = UserService;
+async function findAll() {
+  const users = await User.find();
+  return users;
+}
+
+async function findOne(query) {
+  try {
+    const user = await User.findById(query);
+    return user;
+  } catch (error) {
+    return notFoundError(query);
+  }
+}
+
+async function update(id, changes) {
+  try {
+    const user = await User.findOneAndUpdate({ id }, { ...changes });
+    await user.save();
+    return user;
+  } catch (error) {
+    return notFoundError(id);
+  }
+}
+
+async function remove(id) {
+  try {
+    const user = await User.findOneAndDelete({ id });
+    return user;
+  } catch (error) {
+    return notFoundError(id);
+  }
+}
+
+module.exports = { create, findAll, findOne, update, remove };

@@ -1,9 +1,10 @@
-'use strict';
-const path = process.env.NODE_ENV ? {} : `.env.${process.env.NODE_ENV}`;
-require('dotenv').config(path);
+require('dotenv').config();
+
+console.log(`usiing enviroment: ${process.env.NODE_ENV}`);
+
 const config = {
-  env: process.env.NODE_ENV || 'dev',
-  appPort: process.env.PORT || 3000,
+  env: process.env.NODE_ENV,
+  appPort: process.env.PORT,
   dbUser: process.env.DB_USER,
   dbPass: process.env.DB_PASSWORD,
   dbHost: process.env.DB_HOST,

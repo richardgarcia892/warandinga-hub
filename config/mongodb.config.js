@@ -1,4 +1,3 @@
-'use strict';
 const mongoose = require('mongoose');
 const config = require('./index');
 
@@ -18,9 +17,11 @@ mongoose.connect(
     useUnifiedTopology: true,
   },
   (error) => {
-    error
-      ? console.error(error)
-      : console.log(`connect to: ${HOST}, with user ${USER}`);
+    if (error) {
+      console.error(error);
+    } else {
+      console.log(`connect to: ${HOST}, with user ${USER}`);
+    }
   }
 );
 

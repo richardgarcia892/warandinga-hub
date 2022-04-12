@@ -1,10 +1,9 @@
-'use strict';
-const errorHandlerMiddleware = require('./error.handler');
+const errorMiddleware = require('./error.handler');
 
 function middlewareApi(app) {
-  app.use(errorHandlerMiddleware.logErrors);
-  app.use(errorHandlerMiddleware.boomErrorHandler);
-  app.use(errorHandlerMiddleware.errorHandler);
+  app.use(errorMiddleware.logErrors);
+  app.use(errorMiddleware.boomErrorHandler);
+  app.use(errorMiddleware.errorHandler);
 }
 
 module.exports = middlewareApi;

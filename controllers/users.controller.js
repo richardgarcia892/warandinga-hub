@@ -1,11 +1,9 @@
-'use strict';
-const UserService = require('../services/users.service');
-const service = new UserService();
+const userService = require('../services/users.service');
 
 /* eslint-disable no-unused-vars */
 async function getAll(req, res, next) {
   try {
-    const users = await service.find();
+    const users = await userService.findAll();
     res.send(users);
   } catch (error) {
     next(error);
@@ -14,31 +12,28 @@ async function getAll(req, res, next) {
 async function create(req, res, next) {
   try {
     const { body } = req;
-    const user = await service.create(body);
-    res.send(201, user);
+    const user = await userService.create(body);
+    res.status(201).send(user.toJSON());
   } catch (error) {
     next(error);
   }
 }
-
 async function getById(req, res, next) {
   try {
     const { id } = req.params;
-    const user = await service.findOne(id);
+    const user = await userService.findOne(id);
     res.json(user);
   } catch (error) {
     next(error);
   }
 }
-
 async function update(req, res, next) {
   try {
-    res.send(`updateUser ${req.params.id}`);
+    res.send({ func: 'updateUser', params: req.params, body: req.body });
   } catch (error) {
     next(error);
   }
 }
-
 async function remove(req, res, next) {
   try {
     res.send(`deleteUser ${req.params.id}`);

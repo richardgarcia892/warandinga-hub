@@ -1,13 +1,12 @@
-'use strict';
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
-
 const config = require('./config');
 const middlewareApi = require('./middleware');
 const routerApi = require('./routes');
 
 require('./config/mongodb.config');
+
 const app = express();
 
 // Middlewares
