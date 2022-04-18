@@ -41,11 +41,10 @@ describe('Users', () => {
       .post('/api/v1/users')
       .send(user)
       .end((err, res) => {
-        res.should.have.status(500);
+        res.should.have.status(400);
         res.body.should.be.a('object');
         res.body.should.have.property('error');
         res.body.should.have.property('message');
-        res.body.message.should.be.eql('An internal server error occurred');
         done();
       });
   });
