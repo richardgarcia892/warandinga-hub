@@ -1,9 +1,9 @@
-const express = require('express');
-const cors = require('cors');
-const helmet = require('helmet');
-const config = require('./config');
-const middlewareApi = require('./middleware');
-const routerApi = require('./routes');
+import express from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+import config from './config';
+import middlewareApi from './middleware';
+import routerApi from './routes';
 
 require('./config/mongodb.config');
 
@@ -20,4 +20,4 @@ middlewareApi(app);
 app.listen(config.appPort, () => {
   console.log(`app running on port ${config.appPort}`);
 });
-module.exports = app;
+exports = app;

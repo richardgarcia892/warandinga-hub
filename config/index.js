@@ -11,4 +11,4 @@ const config = {
   dbName: process.env.DB_NAME,
 };
 
-module.exports = config;
+export default config;

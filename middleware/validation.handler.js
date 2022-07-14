@@ -1,5 +1,6 @@
 const boom = require('@hapi/boom');
 
+// TODO: MEJORAR ESTO (prueba unitaria para esta funcion)
 function validationHandler(schema, property) {
   return (req, res, next) => {
     const data = req[property];
