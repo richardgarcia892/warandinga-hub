@@ -1,9 +1,9 @@
-const errorMiddleware = require('./error.handler');
+import { logErrors, boomErrorHandler, errorHandler } from './error.handler';
 
 function middlewareApi(app) {
-  app.use(errorMiddleware.logErrors);
-  app.use(errorMiddleware.boomErrorHandler);
-  app.use(errorMiddleware.errorHandler);
+  app.use(logErrors);
+  app.use(boomErrorHandler);
+  app.use(errorHandler);
 }
 
-module.exports = middlewareApi;
+export default middlewareApi;

@@ -1,5 +1,7 @@
-import { connect, connection } from 'mongoose';
+import mongoose from 'mongoose';
 import config from './index';
+
+const { connect, connection } = mongoose
 
 const HOST = config.dbHost;
 const USER = config.dbUser;
@@ -13,7 +15,7 @@ console.log({
   DBNAME,
 });
 
-const URI = `mongodb+srv://${USER}:${PASS}@${HOST}/${DBNAME}?retryWrites=true&w=majority`;
+const URI = `mongodb://${USER}:${PASS}@${HOST}/${DBNAME}?authSource=admin`;
 
 // Connect to MongoDB
 connect(

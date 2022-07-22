@@ -2,13 +2,15 @@
   "name": "warandinga-hub",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "start": "node app.js",
-    "devStart": "nodemon -L app.js",
+    "start": "node --experimental-modules --es-module-specifier-resolution=node app.js",
+    "devStart": "nodemon -L --experimental-modules --es-module-specifier-resolution=node app.js",
     "mocha": "mocha 'tests/**/*.js' --timeout 10000 --exit"
   },
   "dependencies": {
     "@hapi/boom": "^9.1.4",
+    "bcrypt": "^5.0.1",
     "body-parser": "^1.20.0",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",

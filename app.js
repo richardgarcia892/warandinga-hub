@@ -5,7 +5,7 @@ import config from './config';
 import middlewareApi from './middleware';
 import routerApi from './routes';
 
-require('./config/mongodb.config');
+import './config/mongodb.config';
 
 const app = express();
 
@@ -20,4 +20,4 @@ middlewareApi(app);
 app.listen(config.appPort, () => {
   console.log(`app running on port ${config.appPort}`);
 });
-exports = app;
+export default app;

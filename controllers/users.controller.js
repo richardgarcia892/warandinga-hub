@@ -1,6 +1,7 @@
-const userService = require('../services/users.service');
+import UserService from '../services/users.service';
 
-/* eslint-disable no-unused-vars */
+const userService = new UserService();
+
 async function getAll(req, res, next) {
   try {
     const users = await userService.findAll();
@@ -42,10 +43,4 @@ async function remove(req, res, next) {
   }
 }
 
-module.exports = {
-  getById,
-  getAll,
-  create,
-  update,
-  remove,
-};
+export { getById, getAll, create, update, remove };

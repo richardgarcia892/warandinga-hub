@@ -16,4 +16,4 @@ function boomErrorHandler(err, req, res, next) {
     next(err);
   }
 }
-module.exports = { logErrors, errorHandler, boomErrorHandler };
+export { logErrors, errorHandler, boomErrorHandler };
