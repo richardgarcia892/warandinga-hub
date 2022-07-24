@@ -1,7 +1,7 @@
-const chai = require('chai');
-const chaiHttp = require('chai-http');
-const app = require('../app');
-const User = require('../models/users.model');
+import chai from 'chai';
+import chaiHttp from 'chai-http';
+import app from '../app';
+import User from '../models/users.model';
 
 process.env.NODE_ENV = 'TEST';
 
@@ -28,44 +28,67 @@ describe('Users', () => {
         });
     });
   });
-  describe('/POST User', () => {});
-  it('it should not POST an User without EMAIL field', (done) => {
-    const user = {
-      userName: 'jhondoe1992',
-      password: 'JhonPassword',
-      firstName: 'Jhon',
-      lastName: 'Doe',
-    };
-    chai
-      .request(app)
-      .post('/api/v1/users')
-      .send(user)
-      .end((err, res) => {
-        res.should.have.status(400);
-        res.body.should.be.a('object');
-        res.body.should.have.property('error');
-        res.body.should.have.property('message');
-        done();
-      });
-  });
-  it('it should  POST an User', (done) => {
-    const user = {
-      userName: 'jhondoe1992',
-      password: 'JhonPassword',
-      email: 'jhondoe@email.com',
-      firstName: 'Jhon',
-      lastName: 'Doe',
-    };
-    chai
-      .request(app)
-      .post('/api/v1/users')
-      .send(user)
-      .end((err, res) => {
-        res.should.have.status(201);
-        res.body.should.be.a('object');
-        res.body.shoud.have.property('userName');
-        res.body.shoud.have.property('email');
-        done();
-      });
+  describe('/POST User', () => {
+    it('it should NOT POST an User without EMAIL field', (done) => {
+      const user = {
+        userName: 'jhondoe1992',
+        password: 'JhonPassword',
+        firstName: 'Jhon',
+        lastName: 'Doe',
+      };
+      chai
+        .request(app)
+        .post('/api/v1/users')
+        .send(user)
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.be.a('object');
+          res.body.should.have.property('error');
+          res.body.should.have.property('message');
+          done();
+        });
+    });
+    it('it should NOT POST an User with weak password field', (done) => {
+      const user = {
+        userName: 'jhondoe1992',
+        password: 'JhonPassword',
+        email: 'jhondoe@email.com',
+        firstName: 'Jhon',
+        lastName: 'Doe',
+      };
+      chai
+        .request(app)
+        .post('/api/v1/users')
+        .send(user)
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.be.a('object');
+          res.body.should.have.property('error');
+          res.body.should.have.property('message');
+          done();
+        });
+    });
+    it('it should  POST an User', (done) => {
+      const user = {
+        userName: 'jhondoe1992',
+        password: 'JhonPassword123456**',
+        email: 'jhondoe@email.com',
+        firstName: 'Jhon',
+        lastName: 'Doe',
+      };
+      chai
+        .request(app)
+        .post('/api/v1/users')
+        .send(user)
+        .end((err, res) => {
+          res.should.have.status(201);
+          res.body.should.be.a('object');
+          res.body.shoud.have.property('userName');
+          res.body.email.should.be.equal(user.email);
+          res.body.shoud.have.property('email');
+          res.body.email.should.be.equal(user.userName);
+          done();
+        });
+    });
   });
 });
