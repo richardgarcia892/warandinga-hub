@@ -14,7 +14,8 @@ async function create(req, res, next) {
   try {
     const { body } = req;
     const user = await userService.create(body);
-    res.status(201).send(user.toJSON());
+    const response = { userName: user.userName, email: user.email };
+    res.status(201).send(response);
   } catch (error) {
     next(error);
   }
