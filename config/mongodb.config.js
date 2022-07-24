@@ -1,21 +1,23 @@
 import mongoose from 'mongoose';
 import config from './index';
 
-const { connect, connection } = mongoose
+const { connect, connection } = mongoose;
 
 const HOST = config.dbHost;
 const USER = config.dbUser;
 const PASS = config.dbPass;
 const DBNAME = config.dbName;
+const DBPORT = config.dbPort;
 console.log({
   env: process.env.NODE_ENV,
   HOST,
   USER,
   PASS,
   DBNAME,
+  DBPORT,
 });
 
-const URI = `mongodb://${USER}:${PASS}@${HOST}/${DBNAME}?authSource=admin`;
+const URI = `mongodb://${USER}:${PASS}@${HOST}:${DBPORT}/${DBNAME}?authSource=admin`;
 
 // Connect to MongoDB
 connect(
@@ -30,7 +32,7 @@ connect(
     } else {
       console.log(`connect to: ${HOST}, with user ${USER}`);
     }
-  },
+  }
 );
 
 const db = connection;

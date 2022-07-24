@@ -1,13 +1,10 @@
 import boom from '@hapi/boom';
 import User from '../models/users.model';
+import { userDbErrors } from '../enums/db.enums';
 
 class UserService {
   notFoundError(id) {
     throw boom.notFound(`User (${id}) not found`);
-  }
-
-  dbError(error) {
-    throw boom.internal(`${error}`);
   }
 
   async create(data) {
@@ -15,7 +12,11 @@ class UserService {
       const user = await User.create(data);
       return user;
     } catch (error) {
-      return dbError(error);
+      if (error.message === userDbErrors.emailAlreadyExist || userDbErrors.userNameAlreadyExist) {
+        throw boom.badRequest(error.message);
+      } else {
+        throw boom.internal(error);
+      }
     }
   }
 

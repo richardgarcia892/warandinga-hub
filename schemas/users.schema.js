@@ -1,9 +1,10 @@
 import Joi from 'joi';
+import JoiPasswordComplexity from 'joi-password-complexity';
 
 const id = Joi.string();
 const email = Joi.string().email();
 const userName = Joi.string().max(20);
-const password = Joi.string().min(8);
+const password = JoiPasswordComplexity(); // Password complexity Check
 const firstName = Joi.string().max(20);
 const lastName = Joi.string().max(20);
 

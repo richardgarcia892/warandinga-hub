@@ -1,5 +1,5 @@
-import dotenv from 'dotenv'
-dotenv.config()
+import dotenv from 'dotenv';
+dotenv.config();
 console.log(`usiing enviroment: ${process.env.NODE_ENV}`);
 
 const config = {
@@ -9,7 +9,8 @@ const config = {
   dbPass: process.env.DB_PASSWORD,
   dbHost: process.env.DB_HOST,
   dbName: process.env.DB_NAME,
-  hashSalt: process.env.HASH_SALT
+  dbPort: process.env.DB_PORT,
+  hashSalt: process.env.HASH_SALT,
 };
 
 export default config;
