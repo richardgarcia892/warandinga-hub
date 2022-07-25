@@ -15,7 +15,7 @@ describe('Users', () => {
       done();
     });
   });
-  describe('/GET Users', () => {
+  describe('GET: / listUsers', () => {
     it('it should GET all the users', (done) => {
       chai
         .request(app)
@@ -28,7 +28,7 @@ describe('Users', () => {
         });
     });
   });
-  describe('/POST User', () => {
+  describe('POST: / createUser', () => {
     it('it should NOT POST an User without EMAIL field', (done) => {
       const user = {
         userName: 'jhondoe1992',
@@ -90,5 +90,13 @@ describe('Users', () => {
           done();
         });
     });
+  });
+  // TODO write these tests
+  describe('POST: /users/login loginUser', () => {
+    it('it should NOT allow user to login with wrong username / password', (done) => {});
+    it('it should NOT allow user to login with wrong email / password', (done) => {});
+    it('it should allow user to login with username / password', (done) => {});
+    it('it should allow user to login with email / password', (done) => {});
+    it('it should throw an error is password is missing on the request', (done) => {});
   });
 });
