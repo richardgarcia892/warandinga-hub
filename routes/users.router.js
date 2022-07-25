@@ -1,8 +1,8 @@
 import Router from 'express';
 
-import { getAll, create, getById, update, remove } from '../controllers/users.controller';
+import { getAll, create, getById, update, remove, login } from '../controllers/users.controller';
 import { validationHandler } from '../middleware/validation.handler';
-import { createUserSchema, updateUserSchema, getUserByIdSchema } from '../schemas/users.schema';
+import { createUserSchema, updateUserSchema, getUserByIdSchema, userLoginSchema } from '../schemas/users.schema';
 
 const router = Router();
 
@@ -11,6 +11,9 @@ router.get('/', getAll);
 
 /* Create new user */
 router.post('/', validationHandler(createUserSchema, 'body'), create);
+
+/* User login */
+router.post('/login', validationHandler(userLoginSchema, 'body'), login);
 
 /* Get single user by ID */
 router.get('/:id', validationHandler(getUserByIdSchema, 'params'), getById);

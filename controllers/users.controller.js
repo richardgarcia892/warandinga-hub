@@ -10,6 +10,7 @@ async function getAll(req, res, next) {
     next(error);
   }
 }
+
 async function create(req, res, next) {
   try {
     const { body } = req;
@@ -20,6 +21,17 @@ async function create(req, res, next) {
     next(error);
   }
 }
+
+async function login(req, res, next) {
+  try {
+    const { body } = req;
+    const login = await userService.login(body);
+    res.status(200).send(login);
+  } catch (error) {
+    next(error);
+  }
+}
+
 async function getById(req, res, next) {
   try {
     const { id } = req.params;
@@ -44,4 +56,4 @@ async function remove(req, res, next) {
   }
 }
 
-export { getById, getAll, create, update, remove };
+export { getById, getAll, create, update, remove, login };

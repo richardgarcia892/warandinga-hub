@@ -1,6 +1,8 @@
 import boom from '@hapi/boom';
 import User from '../models/users.model';
 import { userDbErrors } from '../enums/db.enums';
+import bcrypt from 'bcrypt';
+import config from '../config';
 
 class UserService {
   notFoundError(id) {
@@ -9,6 +11,8 @@ class UserService {
 
   async create(data) {
     try {
+      const salt = bcrypt.genSaltSync(parseInt(config.saltRounds));
+      data.password = bcrypt.hashSync(data.password, salt);
       const user = await User.create(data);
       return user;
     } catch (error) {
@@ -17,6 +21,23 @@ class UserService {
       } else {
         throw boom.internal(error);
       }
+    }
+  }
+
+  async login(data) {
+    try {
+      const { userName, email, password } = data;
+      const user = await User.findOne({ $or: [{ userName }, { email }] });
+      const passMatch = bcrypt.compareSync(password, user.password);
+      // TODO: Implement JWT Tokens
+      if (passMatch) {
+        return passMatch;
+      } else {
+        // TODO: Improve this workflow
+        throw new Error();
+      }
+    } catch (error) {
+      throw boom.unauthorized('user or email does not match with given password');
     }
   }
 

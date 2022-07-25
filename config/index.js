@@ -10,7 +10,7 @@ const config = {
   dbHost: process.env.DB_HOST,
   dbName: process.env.DB_NAME,
   dbPort: process.env.DB_PORT,
-  hashSalt: process.env.HASH_SALT,
+  saltRounds: process.env.SALT_ROUNDS,
 };
 
 export default config;

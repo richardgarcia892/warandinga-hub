@@ -12,6 +12,4 @@ function validationHandler(schema, property) {
   };
 }
 
-function passwordStrengthValidator(req, res, next) {}
-
-export { validationHandler, passwordStrengthValidator };
+export { validationHandler };
