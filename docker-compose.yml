@@ -1,27 +1,23 @@
-version: "3.3"
-name: warandinga-hub
+version: "3.1"
+
 services:
-  warandinga-db:
+  mongo:
     image: mongo
     restart: always
     ports:
       - 27017:27017
     volumes:
-      - mongo-data:/data/db
+      - ./warandinga-mongo:/data/db
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
 
-  warandinga-db-interface:
+  mongo-express:
     image: mongo-express
     restart: always
     ports:
       - 8081:8081
-    depends_on:
-     - warandinga-db
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: example
-      ME_CONFIG_MONGODB_URL: mongodb://root:example@warandinga-db:27017/
-volumes:
-  mongo-data:
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/

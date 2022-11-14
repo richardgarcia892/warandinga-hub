@@ -15,7 +15,7 @@ describe('Users', () => {
       done();
     });
   });
-  describe('GET: / listUsers', () => {
+  describe('GET: /listUsers', () => {
     it('it should GET all the users', (done) => {
       chai
         .request(app)
@@ -28,7 +28,7 @@ describe('Users', () => {
         });
     });
   });
-  describe('POST: / createUser', () => {
+  describe('POST: /createUser', () => {
     it('it should NOT POST an User without EMAIL field', (done) => {
       const user = {
         userName: 'jhondoe1992',
